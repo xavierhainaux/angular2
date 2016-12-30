@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:analyzer/analyzer.dart';
+import 'package:angular2/parse_compilation_unit.dart';
 import 'package:angular2/src/transform/common/annotation_matcher.dart';
 import 'package:angular2/src/transform/common/asset_reader.dart';
 import 'package:angular2/src/transform/common/mirror_mode.dart';
@@ -26,5 +27,5 @@ Future<String> removeReflectionCapabilities(AssetReader reader,
   return new Rewriter(code, codegen,
           new EntrypointMatcher(reflectionEntryPoint, annotationMatcher),
           mirrorMode: mirrorMode, writeStaticInit: writeStaticInit)
-      .rewrite(parseCompilationUnit(code, name: reflectionEntryPoint.path));
+      .rewrite(parseCompilationUnitWorkaround(code, name: reflectionEntryPoint.path));
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:analyzer/analyzer.dart';
+import 'package:angular2/parse_compilation_unit.dart';
 import 'package:angular2/src/compiler/compile_metadata.dart'
     show CompileIdentifierMetadata;
 import 'package:angular2/src/compiler/offline_compiler.dart';
@@ -28,7 +29,7 @@ Future<NgMeta> createNgMeta(
   var codeWithParts = await inlineParts(reader, assetId);
   if (codeWithParts == null || codeWithParts.isEmpty) return null;
   var parsedCode =
-      parseCompilationUnit(codeWithParts, name: '${assetId.path} and parts');
+      parseCompilationUnitWorkaround(codeWithParts, name: '${assetId.path} and parts');
 
   if (options.checkDeferredImportInitialization) {
     checkDeferredImportInitialization(codeWithParts, parsedCode);

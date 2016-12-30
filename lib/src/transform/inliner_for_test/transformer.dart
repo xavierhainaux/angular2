@@ -3,6 +3,7 @@ import 'dart:convert' show LineSplitter;
 
 import 'package:analyzer/analyzer.dart';
 import 'package:analyzer/dart/ast/ast.dart';
+import 'package:angular2/parse_compilation_unit.dart';
 import 'package:angular2/src/compiler/xhr.dart' show XHR;
 import 'package:angular2/src/transform/common/annotation_matcher.dart';
 import 'package:angular2/src/transform/common/asset_reader.dart';
@@ -61,7 +62,7 @@ Future<String> inline(AssetReader reader, AssetId assetId,
   var codeWithParts = await inlineParts(reader, assetId);
   if (codeWithParts == null) return null;
   var parsedCode =
-      parseCompilationUnit(codeWithParts, name: '${assetId.path} and parts');
+      parseCompilationUnitWorkaround(codeWithParts, name: '${assetId.path} and parts');
   var writer = new AsyncStringWriter();
   var visitor = new _ViewPropInliner(
       assetId, codeWithParts, writer, new XhrImpl(reader), annotationMatcher);

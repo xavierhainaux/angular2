@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:analyzer/analyzer.dart';
 import 'package:analyzer/dart/ast/ast.dart';
+import 'package:angular2/parse_compilation_unit.dart';
 import 'package:angular2/src/transform/common/asset_reader.dart';
 import 'package:angular2/src/transform/common/logging.dart';
 import 'package:angular2/src/transform/common/names.dart';
@@ -43,7 +44,7 @@ Future<String> rewriteLibrary(AssetId entryPoint, AssetReader reader) async {
       return null;
     }
 
-    var node = parseCompilationUnit(code, name: entryPoint.path);
+    var node = parseCompilationUnitWorkaround(code, name: entryPoint.path);
     if (node == null) {
       log.fine('No declarations parsed, bailing early.', asset: entryPoint);
       return null;

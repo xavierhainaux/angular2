@@ -1,5 +1,6 @@
 @TestOn('vm')
 import 'package:analyzer/analyzer.dart';
+import 'package:angular2/parse_compilation_unit.dart';
 import 'package:angular2/src/transform/common/zone.dart' as zone;
 import 'package:angular2/src/transform/directive_processor/deferred_import_validator.dart';
 import 'package:barback/barback.dart';
@@ -29,7 +30,7 @@ void runTest(String name, String code, bool expectError) {
   test(name, () async {
     var logger = new _CapturingLogger();
     await zone.exec(() {
-      var parsedCode = parseCompilationUnit(code);
+      var parsedCode = parseCompilationUnitWorkaround(code);
       checkDeferredImportInitialization(code, parsedCode);
     }, log: logger);
     var hasError = logger.entries.any((e) =>
